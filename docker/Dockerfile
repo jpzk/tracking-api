@@ -34,4 +34,5 @@ EXPOSE 9990
 EXPOSE 8888
 
 WORKDIR /
+ENTRYPOINT ["/bin/bash","/start.sh"]
 
