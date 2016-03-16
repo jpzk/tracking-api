@@ -30,6 +30,8 @@ class EventDataController @Inject()(client: CSVFileWriter)
     */
   def deserialize(request: Request): EventDataRequest = {
     val na = "N/A"
+    val ip = request.remoteAddress.getHostAddress
+    val ua = request.userAgent.getOrElse(na)
     val site = request.getParam("s", na) // if not available: N/A
     val siteversion = request.getParam("v", na)
     val cookie = request.getParam("u", na)
@@ -39,7 +41,7 @@ class EventDataController @Inject()(client: CSVFileWriter)
     val time = DateTime.now().getMillis
 
     EventDataRequest(time, site, siteversion,
-      cookie, fingerprint, screen, event)
+      ip, ua, cookie, fingerprint, screen, event)
   }
 
   def track(request: Request) = {
