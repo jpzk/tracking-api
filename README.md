@@ -7,7 +7,7 @@ Requirements: Linux host with git and docker
   cd tracking-service 
 
   docker build -t trackingservice .
-  docker run -i --name trackingservicec -v /var/data /var/data -p 8888:8888 -p 9990:9990 -t trackingservice 
+  docker run -i --name trackingservicec -v /var/data/tracking:/var/data/tracking -p 8888:8888 -p 9990:9990 -t trackingservice 
 </pre>
 
 The API endpoint is served on container port 8888 and on the host system it is 80.
