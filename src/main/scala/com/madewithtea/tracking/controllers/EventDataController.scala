@@ -34,7 +34,7 @@ class EventDataController @Inject()(client: CSVFileWriter)
       cookie, fingerprint, screen, event)
   }
 
-  post("/track", name = "pixel_endpoint") { request: Request =>
+  get("/track", name = "pixel_endpoint") { request: Request =>
     warehouseService(deserialize(request)).flatMap { promise =>
       promise match {
         case Success(result) => {
