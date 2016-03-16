@@ -18,15 +18,6 @@ class CSVFileWriter {
   var writer = openWriter()
 
   /**
-    * Write the CSV header in new file
-    *
-    * @param writer
-    */
-  def writeHeader(writer: CSVWriter) = {
-    writer.writeRow(Seq("timestamp","clientid","payloadid","cpuusage"))
-  }
-
-  /**
     * Open the file for a given day
     *
     * @return
@@ -36,7 +27,6 @@ class CSVFileWriter {
     val time = DateTime.now().toString(fmt)
     val dir = Config.CSVDirectory
     val writer = CSVWriter.open(new File(s"$dir/events-$time.csv"))
-    writeHeader(writer)
     writer
   }
 
