@@ -14,6 +14,14 @@ class EventDataController @Inject()(client: CSVFileWriter)
 
   val warehouseService = new WarehouseService(client)
 
+  get("/h", name = "old_pixel_endpoint") { request: Request =>
+    track(request)
+  }
+
+  get("/track", name = "pixel_endpoint") { request: Request =>
+    track(request)
+  }
+
   /**
     * Convert GET parameters to EventDataRequest object
     *
@@ -34,7 +42,7 @@ class EventDataController @Inject()(client: CSVFileWriter)
       cookie, fingerprint, screen, event)
   }
 
-  get("/track", name = "pixel_endpoint") { request: Request =>
+  def track(request: Request) = {
     warehouseService(deserialize(request)).flatMap { promise =>
       promise match {
         case Success(result) => {
@@ -49,5 +57,7 @@ class EventDataController @Inject()(client: CSVFileWriter)
       }
     }
   }
+
+
 }
 
