@@ -14,11 +14,7 @@ class EventDataController @Inject()(client: CSVFileWriter)
 
   val warehouseService = new WarehouseService(client)
 
-  get("/h", name = "old_pixel_endpoint") { request: Request =>
-    track(request)
-  }
-
-  get("/track", name = "pixel_endpoint") { request: Request =>
+  get("/h", name = "pixel_endpoint") { request: Request =>
     track(request)
   }
 
