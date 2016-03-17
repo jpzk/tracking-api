@@ -14,22 +14,6 @@ case class CSVWriterResponse()
 
 @Singleton
 class CSVFileWriter {
-  val day = DateTime.now().dayOfMonth()
-  var writer = openWriter()
-
-  /**
-    * Open the file for a given day
-    *
-    * @return
-    */
-  def openWriter() = {
-    val fmt = DateTimeFormat.forPattern("yyyyMMdd")
-    val time = DateTime.now().toString(fmt)
-    val dir = Config.CSVDirectory
-    val writer = CSVWriter.open(new File(s"$dir/events-$time.csv"), append=true)
-    writer
-  }
-
   /**
     * Adds the values to the CSV file of given hour, if raised exceptions
     * sends back Failure, this will result into resending on the client side
@@ -39,16 +23,17 @@ class CSVFileWriter {
     */
   def addValues(r: EventDataRequest): Try[CSVWriterResponse] = {
     try {
-      if (DateTime.now().dayOfMonth() != day) {
-        writer.close()
-        writer = openWriter()
-      }
+      val fmt = DateTimeFormat.forPattern("yyyyMMdd")
+      val time = DateTime.now().toString(fmt)
+      val dir = Config.CSVDirectory
+      val writer = CSVWriter.open(new File(s"$dir/events-$time.csv"), append = true)
       writer.writeRow(Seq(r.time, r.siteid, r.siteversion,
         r.remoteAdress, r.userAgent, r.cookie, r.fingerprint,
         r.screen, r.event))
-      writer.flush()
-    } catch { case t: Throwable =>
-      return Failure(t)
+      writer.close()
+    } catch {
+      case t: Throwable =>
+        return Failure(t)
     }
     Success(CSVWriterResponse())
   }
