@@ -14,6 +14,7 @@ val versions = new {
 }
 
 libraryDependencies ++= Seq(
+  "com.paulgoldbaum" %% "scala-influxdb-client" % "0.4.4",
   "com.typesafe" % "config" % "1.3.0",
   "com.github.nscala-time" %% "nscala-time" % "2.10.0",
   "com.github.tototoshi" %% "scala-csv" % "1.3.0",
