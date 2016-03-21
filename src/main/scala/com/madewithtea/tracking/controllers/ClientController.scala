@@ -16,6 +16,7 @@ class ClientController extends Controller {
   }
 
   get("/user.min.js", name = "fetch_client_endpoint") { request: Request =>
+    informInflux(request)
     val site = request.params.get("s")
     val version = request.params.get("v")
     if(site.isDefined && version.isDefined)

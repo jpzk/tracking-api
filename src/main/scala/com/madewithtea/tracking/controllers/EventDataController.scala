@@ -64,8 +64,9 @@ class EventDataController @Inject()(client: CSVFileWriter)
   }
 
   def track(request: Request) = {
-
-    warehouseService(deserialize(request)).flatMap { promise =>
+    val eventDataRequest = deserialize(request)
+    informInflux(eventDataRequest)
+    warehouseService(eventDataRequest) flatMap { promise =>
       promise match {
         case Success(result) => {
           response.ok.body("").toFuture
