@@ -27,7 +27,7 @@ class CSVFileWriter {
       val time = DateTime.now().toString(fmt)
       val dir = Config.CSVDirectory
       val writer = CSVWriter.open(new File(s"$dir/events-$time.csv"), append = true)
-      writer.writeRow(Seq(r.time, r.siteid, r.siteversion,
+      writer.writeRow(Seq(r.time, r.site, r.version,
         r.remoteAdress, r.userAgent, r.cookie, r.fingerprint,
         r.screen, r.event))
       writer.close()
