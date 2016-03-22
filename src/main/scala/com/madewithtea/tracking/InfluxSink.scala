@@ -37,14 +37,14 @@ object InfluxSink extends Logging {
     */
   def writeEventData(eventDataRequest: EventDataRequest) = {
     val point = new Point("visit", eventDataRequest.time)
-      .addTag("siteid", eventDataRequest.siteid)
-      .addTag("siteversion", eventDataRequest.siteversion)
-      .addTag("event", eventDataRequest.event)
-      .addTag("cookie", eventDataRequest.cookie)
-      .addField("fingerprint", eventDataRequest.fingerprint)
-      .addField("useragent", eventDataRequest.userAgent)
+      .addTag("siteid", eventDataRequest.site.getOrElse(na))
+      .addTag("siteversion", eventDataRequest.version.getOrElse(na))
+      .addTag("event", eventDataRequest.event.getOrElse(na))
+      .addTag("cookie", eventDataRequest.cookie.getOrElse(na))
+      .addField("fingerprint", eventDataRequest.fingerprint.getOrElse(na))
+      .addField("useragent", eventDataRequest.userAgent.getOrElse(na))
       .addField("remote", eventDataRequest.remoteAdress)
-      .addField("screen", eventDataRequest.screen)
+      .addField("screen", eventDataRequest.screen.getOrElse(na))
     db.write(point, precision = Precision.MILLISECONDS)
       .recover { case e: Exception =>
         logger.error(e.getMessage)

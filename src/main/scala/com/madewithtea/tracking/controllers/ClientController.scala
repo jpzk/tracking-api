@@ -8,10 +8,12 @@ class ClientController extends Controller {
 
   def deserialize(request: Request): ClientFetchRequest = {
     val site = request.params.get("s")
+    val referer = request.referer
     val version = request.params.get("v")
     ClientFetchRequest(site,
       version,
       request.userAgent,
+      referer,
       request.remoteAddress.toString)
   }
 

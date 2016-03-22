@@ -1,7 +1,7 @@
 package com.madewithtea.tracking.controllers
 
-case class EventDataRequest(time: Long, siteid: String, siteversion: String,
-                            remoteAdress: String, userAgent: String,
-                            cookie: String, fingerprint: String, screen: String,
-                            event: String)
+case class EventDataRequest(time: Long, site: Option[String], version: Option[String],
+                            remoteAdress: String, userAgent: Option[String],
+                            cookie: Option[String], fingerprint: Option[String], screen: Option[String],
+                            event: Option[String], referer: Option[String])
 
