@@ -21,9 +21,9 @@ object InfluxSink extends Logging {
   def writeFetch(request: ClientFetchRequest) = {
     val point = new Point("clientfetch", DateTime.now().getMillis)
       .addTag("useragent", request.useragent.getOrElse(na))
-      .addTag("remote", request.remote)
-      .addField("site", request.site.getOrElse(na))
-      .addField("version", request.version.getOrElse(na))
+      .addTag("site", request.site.getOrElse(na))
+      .addTag("version", request.version.getOrElse(na))
+      .addField("remote", request.remote)
     db.write(point, precision = Precision.MILLISECONDS)
       .recover { case e: Exception =>
         logger.error(e.getMessage)
