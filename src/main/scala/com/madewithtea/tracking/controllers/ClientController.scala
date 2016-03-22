@@ -12,7 +12,7 @@ class ClientController extends Controller {
     ClientFetchRequest(site,
       version,
       request.userAgent,
-      request.remoteAddress.getHostAddress)
+      request.remoteAddress.toString)
   }
 
   /**
