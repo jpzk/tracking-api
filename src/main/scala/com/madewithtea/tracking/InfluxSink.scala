@@ -21,6 +21,7 @@ object InfluxSink extends Logging {
   def writeFetch(request: ClientFetchRequest) = {
     val point = new Point("clientfetch", DateTime.now().getMillis)
       .addTag("useragent", request.useragent.getOrElse(na))
+      .addTag("referer", request.referer.getOrElse(na))
       .addTag("site", request.site.getOrElse(na))
       .addTag("version", request.version.getOrElse(na))
       .addField("remote", request.remote)
@@ -41,6 +42,7 @@ object InfluxSink extends Logging {
       .addTag("siteversion", eventDataRequest.version.getOrElse(na))
       .addTag("event", eventDataRequest.event.getOrElse(na))
       .addTag("cookie", eventDataRequest.cookie.getOrElse(na))
+      .addTag("referer", eventDataRequest.referer.getOrElse(na))
       .addField("fingerprint", eventDataRequest.fingerprint.getOrElse(na))
       .addField("useragent", eventDataRequest.userAgent.getOrElse(na))
       .addField("remote", eventDataRequest.remoteAdress)
