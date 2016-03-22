@@ -1,7 +1,7 @@
 package com.madewithtea.tracking.controllers
 
 import javax.inject.{Inject, Singleton}
-import com.madewithtea.tracking.Config
+import com.madewithtea.tracking.InfluxSink
 import com.madewithtea.tracking.services.{CouldNotWriteValues, CSVFileWriter, WarehouseService}
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
@@ -41,31 +41,9 @@ class EventDataController @Inject()(client: CSVFileWriter)
       ip, ua, cookie, fingerprint, screen, event)
   }
 
-  /**
-    * Write event to influx
-    *
-    * @param eventDataRequest
-    * @return
-    */
-  def informInflux(eventDataRequest: EventDataRequest) = {
-    import com.paulgoldbaum.influxdbclient._
-    val influxdb = InfluxDB.connect(Config.InfluxDB, 8086)
-    val db = influxdb.selectDatabase(Config.InfluxDBDatabase)
-    val point = new Point("visit", eventDataRequest.time)
-    point.addTag("siteid", eventDataRequest.siteid)
-    point.addTag("siteversion", eventDataRequest.siteversion)
-    point.addTag("event", eventDataRequest.event)
-    point.addTag("cookie", eventDataRequest.cookie)
-    point.addField("fingerprint", eventDataRequest.fingerprint)
-    point.addField("useragent", eventDataRequest.userAgent)
-    point.addField("remote", eventDataRequest.remoteAdress)
-    point.addField("screen", eventDataRequest.screen)
-    db.write(point)
-  }
-
   def track(request: Request) = {
     val eventDataRequest = deserialize(request)
-    informInflux(eventDataRequest)
+    InfluxSink.writeEventData(eventDataRequest)
     warehouseService(eventDataRequest) flatMap { promise =>
       promise match {
         case Success(result) => {
