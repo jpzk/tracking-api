@@ -1,6 +1,8 @@
 package com.madewithtea.tracking.controllers
 
-import com.madewithtea.tracking.InfluxSink
+import com.madewithtea.tracking.requests.ClientFetchRequest
+import com.madewithtea.tracking.sinks.InfluxDBClient
+import com.madewithtea.tracking.views.ClientView
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
 
@@ -23,7 +25,7 @@ class ClientController extends Controller {
   get("/user.min.js", name = "fetch_client_endpoint") { request: Request =>
     val clientRequest = deserialize(request)
     if(clientRequest.site.isDefined && clientRequest.version.isDefined) {
-      InfluxSink.writeFetch(clientRequest)
+      InfluxDBClient.writeFetch(clientRequest)
       ClientView(clientRequest.site.get, clientRequest.version.get)
     } else
       response.badRequest()

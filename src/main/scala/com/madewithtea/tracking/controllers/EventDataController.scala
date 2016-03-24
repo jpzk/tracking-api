@@ -1,8 +1,9 @@
 package com.madewithtea.tracking.controllers
 
 import javax.inject.{Inject, Singleton}
-import com.madewithtea.tracking.InfluxSink
-import com.madewithtea.tracking.services.{CouldNotWriteValues, CSVFileWriter, WarehouseService}
+import com.madewithtea.tracking.requests.EventDataRequest
+import com.madewithtea.tracking.services.{CouldNotWriteValues, WarehouseService}
+import com.madewithtea.tracking.sinks.{CSVFileWriter, InfluxDBClient}
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
 import com.twitter.inject.Logging
@@ -43,7 +44,7 @@ class EventDataController @Inject()(client: CSVFileWriter)
 
   def track(request: Request) = {
     val eventDataRequest = deserialize(request)
-    InfluxSink.writeEventData(eventDataRequest)
+    InfluxDBClient.writeEventData(eventDataRequest)
     warehouseService(eventDataRequest) flatMap { promise =>
       promise match {
         case Success(result) => {

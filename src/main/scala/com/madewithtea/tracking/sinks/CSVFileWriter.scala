@@ -1,10 +1,11 @@
-package com.madewithtea.tracking.services
+package com.madewithtea.tracking.sinks
 
 import java.io._
 import javax.inject.Singleton
-import com.madewithtea.tracking.Config
-import com.madewithtea.tracking.controllers.EventDataRequest
+
 import com.github.tototoshi.csv.CSVWriter
+import com.madewithtea.tracking.Config
+import com.madewithtea.tracking.requests.EventDataRequest
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 

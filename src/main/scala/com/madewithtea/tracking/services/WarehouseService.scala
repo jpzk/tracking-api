@@ -1,7 +1,8 @@
 package com.madewithtea.tracking.services
 
 import javax.inject.{Inject, Singleton}
-import com.madewithtea.tracking.controllers.EventDataRequest
+import com.madewithtea.tracking.requests.EventDataRequest
+import com.madewithtea.tracking.sinks.CSVFileWriter
 import com.twitter.finagle.Service
 import com.twitter.inject.Logging
 import com.twitter.util.Future

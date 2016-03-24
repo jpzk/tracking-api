@@ -1,4 +1,4 @@
-package com.madewithtea.tracking.controllers
+package com.madewithtea.tracking.requests
 
 case class EventDataRequest(time: Long, site: Option[String], version: Option[String],
                             remoteAdress: String, userAgent: Option[String],

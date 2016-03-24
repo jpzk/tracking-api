@@ -1,16 +1,16 @@
-package com.madewithtea.tracking
+package com.madewithtea.tracking.sinks
 
-import com.madewithtea.tracking.controllers.{ClientFetchRequest, EventDataRequest}
+import com.madewithtea.tracking.Config
+import com.madewithtea.tracking.controllers.EventDataRequest
+import com.madewithtea.tracking.requests.{EventDataRequest, ClientFetchRequest}
 import com.paulgoldbaum.influxdbclient.Parameter.Precision
 import com.paulgoldbaum.influxdbclient._
 import com.twitter.inject.Logging
 import org.joda.time.DateTime
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-/**
-  * The InfluxSink is used to push the measurements to InfluxDB.
-  */
-object InfluxSink extends Logging {
+object InfluxDBClient extends Logging {
   val na = "N/A"
   val influxdb = InfluxDB.connect(Config.InfluxDB, 8086)
   val db = influxdb.selectDatabase(Config.InfluxDBDatabase)
