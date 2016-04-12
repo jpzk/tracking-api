@@ -6,7 +6,8 @@ import com.typesafe.config.ConfigFactory
 
 object Config {
   val config = ConfigFactory.parseFile(new File("application.conf"))
-  def CSVDirectory = config.getString("csv-directory")
-  def InfluxDB = config.getString("influxdb")
-  def InfluxDBDatabase = config.getString("influxdb-database")
+  lazy val remoteAddressHeader = config.getString("http.remote_address_header")
+  lazy val CSVDirectory = config.getString("csv.directory")
+  lazy val influxDB = config.getString("influxdb.host")
+  lazy val influxDBDatabase = config.getString("influxdb.database")
 }

@@ -1,7 +1,6 @@
 package com.madewithtea.tracking.sinks
 
 import com.madewithtea.tracking.Config
-import com.madewithtea.tracking.controllers.EventDataRequest
 import com.madewithtea.tracking.requests.{EventDataRequest, ClientFetchRequest}
 import com.paulgoldbaum.influxdbclient.Parameter.Precision
 import com.paulgoldbaum.influxdbclient._
@@ -12,8 +11,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object InfluxDBClient extends Logging {
   val na = "N/A"
-  val influxdb = InfluxDB.connect(Config.InfluxDB, 8086)
-  val db = influxdb.selectDatabase(Config.InfluxDBDatabase)
+  val influxdb = InfluxDB.connect(Config.influxDB, 8086)
+  val db = influxdb.selectDatabase(Config.influxDBDatabase)
 
   /**
     * Writing the fetch, which is asked to the ClientController
@@ -24,7 +23,7 @@ object InfluxDBClient extends Logging {
       .addTag("referer", request.referer.getOrElse(na))
       .addTag("site", request.site.getOrElse(na))
       .addTag("version", request.version.getOrElse(na))
-      .addField("remote", request.remote)
+      .addField("remote", request.remote.getOrElse(na))
     db.write(point, precision = Precision.MILLISECONDS)
       .recover { case e: Exception =>
         logger.error(e.getMessage)

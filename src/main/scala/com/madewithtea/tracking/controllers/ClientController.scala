@@ -1,5 +1,6 @@
 package com.madewithtea.tracking.controllers
 
+import com.madewithtea.tracking.Config
 import com.madewithtea.tracking.requests.ClientFetchRequest
 import com.madewithtea.tracking.sinks.InfluxDBClient
 import com.madewithtea.tracking.views.ClientView
@@ -16,7 +17,7 @@ class ClientController extends Controller {
       version,
       request.userAgent,
       referer,
-      request.remoteAddress.toString)
+      request.headerMap.get(Config.remoteAddressHeader))
   }
 
   /**
