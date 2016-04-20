@@ -44,7 +44,6 @@ class EventDataController @Inject()(client: CSVFileWriter)
 
   def track(request: Request) = {
     val eventDataRequest = deserialize(request)
-    InfluxDBClient.writeEventData(eventDataRequest)
     warehouseService(eventDataRequest) flatMap { promise =>
       promise match {
         case Success(result) => {

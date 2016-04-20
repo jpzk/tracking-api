@@ -1,0 +1,15 @@
+webserver:
+ image: nginx
+ volumes:
+  - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.template
+ ports:
+  - "8080:80"
+ command: /bin/bash -c "nginx -g 'daemon off;'"
+ links: 
+  - trackingapi
+ command: /bin/bash -c "cat /etc/nginx/conf.d/nginx.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+trackingapi: 
+ build: tracking-api/.
+ ports:
+   - "8888:8888"
+ 
