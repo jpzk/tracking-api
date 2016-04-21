@@ -1,4 +1,4 @@
-package com.madewithtea.tracking.views
+package com.madewithtea.tracking
 
 import com.twitter.finatra.response.Mustache
 

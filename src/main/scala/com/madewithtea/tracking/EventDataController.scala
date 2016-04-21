@@ -1,33 +1,42 @@
-package com.madewithtea.tracking.controllers
+package com.madewithtea.tracking
 
 import javax.inject.{Inject, Singleton}
-import com.madewithtea.tracking.requests.EventDataRequest
-import com.madewithtea.tracking.services.{CouldNotWriteValues, WarehouseService}
-import com.madewithtea.tracking.sinks.{CSVFileWriter, InfluxDBClient}
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
 import com.twitter.inject.Logging
 import org.joda.time.DateTime
-import scala.util.{Failure, Success}
+
+object EventDataController {
+
+  object Protocol {
+
+    case class EventDataRequest(time: Long,
+                                site: Option[String],
+                                version: Option[String],
+                                remoteAdress: String,
+                                userAgent: Option[String],
+                                cookie: Option[String],
+                                fingerprint: Option[String],
+                                screen: Option[String],
+                                event: Option[String],
+                                referer: Option[String])
+
+  }
+
+}
 
 @Singleton
 class EventDataController @Inject()(client: CSVFileWriter)
   extends Controller with Logging {
 
-  val warehouseService = new WarehouseService(client)
+  import EventDataController.Protocol._
 
   get("/h", name = "pixel_endpoint") { request: Request =>
     track(request)
   }
 
-  /**
-    * Convert GET parameters to EventDataRequest object
-    *
-    * @param request
-    * @return
-    */
   def deserialize(request: Request): EventDataRequest = {
-    val ip = request.remoteAddress.toString
+    val ip = request.headerMap.get(Config.remoteAddressHeader).toString
     val ua = request.userAgent
     val site = request.params.get("s")
     val siteversion = request.params.get("v")
@@ -44,21 +53,7 @@ class EventDataController @Inject()(client: CSVFileWriter)
 
   def track(request: Request) = {
     val eventDataRequest = deserialize(request)
-    warehouseService(eventDataRequest) flatMap { promise =>
-      promise match {
-        case Success(result) => {
-          response.ok.body("").toFuture
-        }
-        case Failure(e: CouldNotWriteValues) =>
-          warn("Could not write values; ask client for resending")
-          response.internalServerError.toFuture
-        case Failure(e) =>
-          warn("Some unexpected error when writing values")
-          response.internalServerError.toFuture
-      }
-    }
+    client.addValues(eventDataRequest)
   }
-
-
 }
 
