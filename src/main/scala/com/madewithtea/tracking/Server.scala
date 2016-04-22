@@ -1,6 +1,5 @@
 package com.madewithtea.tracking
 
-import com.madewithtea.tracking.controllers.EventDataController
 import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finatra.filters.CommonFilters
 import com.twitter.finatra.http.HttpServer
