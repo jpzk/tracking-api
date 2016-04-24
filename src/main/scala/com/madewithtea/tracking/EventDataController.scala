@@ -13,7 +13,7 @@ object EventDataController {
     case class EventDataRequest(time: Long,
                                 site: Option[String],
                                 version: Option[String],
-                                remoteAdress: String,
+                                remoteAdress: Option[String],
                                 userAgent: Option[String],
                                 cookie: Option[String],
                                 fingerprint: Option[String],
@@ -36,7 +36,7 @@ class EventDataController @Inject()(client: CSVFileWriter)
   }
 
   def deserialize(request: Request): EventDataRequest = {
-    val ip = request.headerMap.get(Config.remoteAddressHeader).toString
+    val ip = request.headerMap.get(Config.remoteAddressHeader)
     val ua = request.userAgent
     val site = request.params.get("s")
     val siteversion = request.params.get("v")

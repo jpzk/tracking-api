@@ -21,7 +21,7 @@ class CSVFileWriter {
     writer.writeRow(Seq(r.time,
       r.site.getOrElse(na),
       r.version.getOrElse(na),
-      r.remoteAdress,
+      r.remoteAdress.getOrElse(na),
       r.userAgent.getOrElse(na),
       r.cookie.getOrElse(na),
       r.fingerprint.getOrElse(na),
