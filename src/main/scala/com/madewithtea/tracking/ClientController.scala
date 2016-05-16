@@ -13,9 +13,9 @@ object ClientController {
     case class ClientFetchRequest(time: Long,
                                   site: Option[String],
                                   version: Option[String],
+                                  remote: Option[String],
                                   referer: Option[String],
-                                  useragent: Option[String],
-                                  remote: Option[String]) extends TrackingRequest
+                                  useragent: Option[String]) extends TrackingRequest
   }
 }
 
@@ -29,8 +29,8 @@ class ClientController @Inject()(writer: CSVFileWriter) extends Controller {
 
   def deserialize(request: Request): ClientFetchRequest = {
     ClientFetchRequest(Common.timestamp(), getSite(request),
-      getVersion(request), request.userAgent, request.referer,
-      getSite(request))
+      getVersion(request), getRemoteAddress(request),
+      request.referer, request.userAgent)
   }
 
   get("/user.min.js", name = "fetch_client_endpoint") { request: Request =>
