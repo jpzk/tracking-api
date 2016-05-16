@@ -36,7 +36,7 @@ class CSVFileWriter {
       request.useragent.getOrElse(na)))
   }
 
-  def write(r: TrackingRequest): Unit = {
+  def write(r: TrackingRequest) = {
     val fmt = DateTimeFormat.forPattern("yyyyMMdd")
     val time = DateTime.now().toString(fmt)
     val dir = Config.CSVDirectory
