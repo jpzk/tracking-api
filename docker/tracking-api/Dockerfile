@@ -16,7 +16,7 @@ WORKDIR /tracking-api
 RUN sbt assembly
 RUN mv /tracking-api/target/scala-2.10/tracking-api.jar /
 RUN mv /tracking-api/application.conf /
-RUN mv /tracking-api/docker/start.sh /
+RUN mv /tracking-api/docker/tracking-api/start.sh /
 RUN chmod +x /start.sh
 
 EXPOSE 9990
