@@ -5,3 +5,13 @@ build:
     - unzip sbt-0.13.11
     - sbt/bin/sbt test
     - sbt/bin/sbt assembly
+
+publish:
+  docker:
+    username: jpzk 
+    password: $$DOCKER_PASS 
+    email: jendrik@madewithtea.com
+    repo: jpzk/tracking-api
+    tag: latest
+    file: docker/tracking-api/Dockerfile
+    insecure: false
