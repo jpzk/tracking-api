@@ -8,10 +8,10 @@ build:
 
 publish:
   docker:
-    username: jpzk 
+    username: "jpzk" 
     password: $$DOCKER_PASS 
-    email: jendrik@madewithtea.com
-    repo: jpzk/tracking-api
-    tag: latest
-    file: docker/tracking-api/Dockerfile
+    email: "jendrik@madewithtea.com"
+    repo: "jpzk/tracking-api"
+    tag: "latest"
+    file: "docker/tracking-api/Dockerfile"
     insecure: false
