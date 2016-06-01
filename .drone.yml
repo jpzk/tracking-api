@@ -13,5 +13,5 @@ publish:
     email: "jendrik@madewithtea.com"
     repo: "jpzk/tracking-api"
     tag: "latest"
-    file: "docker/tracking-api/Dockerfile"
+    file: "Dockerfile"
     insecure: false
