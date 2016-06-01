@@ -9,7 +9,7 @@ build:
 publish:
   docker:
     username: "jpzk" 
-    password: $$DOCKER_PASS 
+    password: "$$DOCKER_PASS"
     email: "jendrik@madewithtea.com"
     repo: "jpzk/tracking-api"
     tag: "latest"
