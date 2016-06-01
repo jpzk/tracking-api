@@ -1,0 +1,7 @@
+build: 
+  image: java:8
+  commands: 
+    - wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.11/sbt-0.13.11.zip
+    - unzip sbt-0.13.11
+    - sbt/bin/sbt test
+    - sbt/bin/sbt assembly
