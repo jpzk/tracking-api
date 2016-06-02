@@ -7,9 +7,9 @@ dependencies:
     - "~/.ivy2"
   override:
     - wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.11/sbt-0.13.11.zip:
-      pwd: "~"
+        pwd: "~"
     - unzip sbt-0.13.11:
-      pwd: "~"
+        pwd: "~"
 
 
 test:
