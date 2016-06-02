@@ -3,10 +3,8 @@ machine:
     version: openjdk7
 
 test:
-  pre:
+  override:
     - wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.11/sbt-0.13.11.zip
     - unzip sbt-0.13.11
-  override:
     - sbt/bin/sbt test
-
 
