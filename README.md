@@ -1,12 +1,7 @@
+# Simple Web Event Tracking
+
+![Codeship](https://codeship.com/projects/d7195620-0ad6-0134-aebc-0a94203fde8c/status?branch=master)
+
 Requirements: Linux host with git and docker
 
-## Installation
-
-<pre>
-  git clone git@github.com:jpzk/tracking-service.git
-  cd tracking-service 
-
-  docker build -t trackingservice .
-  docker run -d --name trackingservicec -v /var/data/tracking:/var/data/tracking -p 8888:8888 -t trackingservice 
-</pre>
 
