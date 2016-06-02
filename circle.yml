@@ -2,9 +2,14 @@ machine:
   java:
     version: openjdk7
 
-test:
+dependencies:
+  cache_directories:
+    - "~/.ivy2"
   override:
     - wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.11/sbt-0.13.11.zip
     - unzip sbt-0.13.11
-    - sbt/bin/sbt test
+
+test:
+  override:
+    - ~/sbt/bin/sbt test
 
