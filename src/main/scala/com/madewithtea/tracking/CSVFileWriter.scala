@@ -14,8 +14,9 @@ class CSVFileWriter {
 
   val na = "N/A"
 
+  private def escape(string: String) = string.replaceAllLiterally(",",";")
   private def writeEventDataRequest(writer: CSVWriter, request: EventDataRequest) = {
-    writer.writeRow(Seq(request.time,
+    writer.writeRow(Seq[String](request.time.toString,
       request.site.getOrElse(na),
       request.version.getOrElse(na),
       request.remote.getOrElse(na),
@@ -24,16 +25,16 @@ class CSVFileWriter {
       request.fingerprint.getOrElse(na),
       request.screen.getOrElse(na),
       request.referer.getOrElse(na),
-      request.event.getOrElse(na)))
+      request.event.getOrElse(na)).map(escape))
   }
 
   private def writeClientFetch(writer: CSVWriter, request: ClientFetchRequest) = {
-    writer.writeRow(Seq(request.time,
+    writer.writeRow(Seq[String](request.time.toString,
       request.site.getOrElse(na),
       request.version.getOrElse(na),
       request.remote.getOrElse(na),
       request.referer.getOrElse(na),
-      request.useragent.getOrElse(na)))
+      request.useragent.getOrElse(na)).map(escape))
   }
 
   def write(r: TrackingRequest) = {
